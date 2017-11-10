@@ -15,3 +15,4 @@ The base Transformer class will take care of the rest.
 """
 
 from spec2scl.transformers.generic import GenericTransformer  # noqa
+from spec2scl.transformers.eclipse import EclipseTransformer
