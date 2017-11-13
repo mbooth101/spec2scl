@@ -18,3 +18,7 @@ class EclipseTransformer(transformer.Transformer):
     @matches(r'^Release:', one_line=True, sections=settings.METAINFO_SECTIONS)
     def eclipse_insert_baserelease(self, original_spec, pattern, text):
         return text.replace('%{?dist}', '.%{baserelease}%{?dist}', 1)
+
+    @matches(r'brp-python-bytecompile', one_line=True, sections=['%header'])
+    def python_byte_compiling(self, original_spec, pattern, text):
+        return text.replace('brp-python-bytecompile', 'brp-scl-python-bytecompile', 1)
