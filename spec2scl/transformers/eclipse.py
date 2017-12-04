@@ -22,3 +22,8 @@ class EclipseTransformer(transformer.Transformer):
     @matches(r'brp-python-bytecompile', one_line=True, sections=['%header'])
     def python_byte_compiling(self, original_spec, pattern, text):
         return text.replace('brp-python-bytecompile', 'brp-scl-python-bytecompile', 1)
+
+    @matches(r'(Recommends:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
+    @matches(r'(Enhances:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
+    def eclipse_ignore_new_tags(self, original_spec, pattern, text):
+        return ''
