@@ -12,7 +12,7 @@ class EclipseTransformer(transformer.Transformer):
 
     @matches(r'^', one_line=False, sections=['%header'])
     def eclipse_insert_scl_init(self, original_spec, pattern, text):
-        scl_init = '%{{?scl:%scl_package {0}}}\n%{{!?scl:%global pkg_name %{{name}}}}\n%{{?java_common_find_provides_and_requires}}\n'.format(self.get_original_name(original_spec))
+        scl_init = '%{{?scl:%scl_package {0}}}\n%{{!?scl:%global pkg_name %{{name}}}}\n'.format(self.get_original_name(original_spec))
         return '{0}\n%global baserelease 0\n\n{1}'.format(scl_init, text)
 
     @matches(r'^Release:', one_line=True, sections=settings.METAINFO_SECTIONS)
