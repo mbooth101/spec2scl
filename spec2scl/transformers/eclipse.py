@@ -27,3 +27,26 @@ class EclipseTransformer(transformer.Transformer):
     @matches(r'(Enhances:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
     def eclipse_ignore_new_tags(self, original_spec, pattern, text):
         return ''
+
+    @matches(r'(Conflicts:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
+    @matches(r'(Obsoletes:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
+    @matches(r'(Provides:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
+    def eclipse_provides_obsoletes(self, original_spec, pattern, text):
+        tag = text[0:text.find(':') + 1]
+        provs = text[text.find(':') + 1:]
+        # handle more Provides on one line
+
+        def handle_one_prov(matchobj):
+            groupdict = matchobj.groupdict('')
+            provide = groupdict['dep']
+            # prefix with scl name unless they begin with %{name} (in which case they are already prefixed)
+            if not provide.startswith('%{name}'):
+                provide = '%{{?scl_prefix}}{0}'.format(provide)
+            return '{0}{1}{2}{3}'.format(groupdict['prespace'], provide, groupdict['ver'], groupdict['postspace'])
+
+        prov_re = re.compile(r'(?P<prespace>\s*)(?P<dep>([^\s,]+(.+\))?))(?P<ver>\s*[<>=!]+\s*[^\s]+)?(?P<postspace>,?\s*)')
+        new_prov = prov_re.sub(handle_one_prov, provs)
+        if new_prov:
+            return tag + new_prov
+        else:
+            return ''
