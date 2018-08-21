@@ -120,7 +120,7 @@ class GenericTransformer(transformer.Transformer):
                     return '{0}{1}{2}{3}'.format(text[:index], runtime_dep, buildtime_dep, text[index:])
         return text
 
-    @matches(r'.*', one_line=False, sections=settings.RUNTIME_SECTIONS)
+    @matches(r'.*', one_line=False, sections=settings.BUILD_SECTIONS)
     def sclize_runtime_sections(self, original_spec, pattern, text):
         lines = text.splitlines(True)
         header, section = lines[0], ''.join(lines[1:])
