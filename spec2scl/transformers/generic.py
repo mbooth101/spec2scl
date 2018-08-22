@@ -92,7 +92,7 @@ class GenericTransformer(transformer.Transformer):
     def handle_name_tag(self, original_spec, pattern, text):
         return pattern.sub(r'\1%{?scl_prefix}\2', text)
 
-    @matches(r'%{name}', sections=settings.SPECFILE_SECTIONS)
+    @matches(r'%{name}(?!(.png|.desktop))', sections=settings.SPECFILE_SECTIONS)
     def handle_name_macro(self, original_spec, pattern, text):
         # instances of name macro in these tags should be left alone because they are
         # intentionally referring to the name of the rpm we are currently processing
