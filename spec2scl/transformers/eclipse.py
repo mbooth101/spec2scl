@@ -50,3 +50,8 @@ class EclipseTransformer(transformer.Transformer):
             return tag + new_prov
         else:
             return ''
+
+    @matches(r'replace_platform_plugins_with_symlinks', one_line=True, sections=settings.BUILD_SECTIONS)
+    def eclipse_replace_platform_plugins_with_symlinks(self, original_spec, pattern, text):
+        return text + ' %{_javadir_maven} %{_jnidir_maven}'
+
