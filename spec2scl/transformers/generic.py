@@ -43,6 +43,18 @@ class GenericTransformer(transformer.Transformer):
                     'mvn(com.google.guava:guava:20.0)':'mvn(com.google.guava:guava)',
                     'mvn(com.google.guava:guava:21.0)':'mvn(com.google.guava:guava)',
                     'guava20':'guava',
+                    'mvn(org.eclipse.aether:aether-api)':'mvn(org.eclipse.aether:aether-api:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-connector-basic)':'mvn(org.eclipse.aether:aether-connector-basic:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-impl)':'mvn(org.eclipse.aether:aether-impl:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-spi)':'mvn(org.eclipse.aether:aether-spi:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-util)':'mvn(org.eclipse.aether:aether-util:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-transport-wagon)':'mvn(org.eclipse.aether:aether-transport-wagon:1.1.0)',
+                    'maven-resolver-api':'mvn(org.eclipse.aether:aether-api:1.1.0)',
+                    'maven-resolver-connector-basic':'mvn(org.eclipse.aether:aether-connector-basic:1.1.0)',
+                    'maven-resolver-impl':'mvn(org.eclipse.aether:aether-impl:1.1.0)',
+                    'maven-resolver-spi':'mvn(org.eclipse.aether:aether-spi:1.1.0)',
+                    'maven-resolver-util':'mvn(org.eclipse.aether:aether-util:1.1.0)',
+                    'maven-resolver-transport-wagon':'mvn(org.eclipse.aether:aether-transport-wagon:1.1.0)',
                     }
             if groupdict['dep'] in transformations:
                 groupdict['dep'] = transformations[groupdict['dep']]
