@@ -54,6 +54,8 @@ class GenericTransformer(transformer.Transformer):
                     'maven-resolver-impl':'mvn(org.eclipse.aether:aether-impl:1.1.0)',
                     'maven-resolver-spi':'mvn(org.eclipse.aether:aether-spi:1.1.0)',
                     'maven-resolver-util':'mvn(org.eclipse.aether:aether-util:1.1.0)',
+                    'maven-resolver-transport-file':'mvn(org.eclipse.aether:aether-transport-file:1.1.0)',
+                    'maven-resolver-transport-http':'mvn(org.eclipse.aether:aether-transport-http:1.1.0)',
                     'maven-resolver-transport-wagon':'mvn(org.eclipse.aether:aether-transport-wagon:1.1.0)',
                     }
             if groupdict['dep'] in transformations:
@@ -104,7 +106,7 @@ class GenericTransformer(transformer.Transformer):
     def handle_name_tag(self, original_spec, pattern, text):
         return pattern.sub(r'\1%{?scl_prefix}\2', text)
 
-    @matches(r'%{name}(?!(.png|.desktop))', sections=settings.SPECFILE_SECTIONS)
+    @matches(r'(?<!Icon=)%{name}(?!(.png|.desktop))', sections=settings.SPECFILE_SECTIONS)
     def handle_name_macro(self, original_spec, pattern, text):
         # instances of name macro in these tags should be left alone because they are
         # intentionally referring to the name of the rpm we are currently processing
