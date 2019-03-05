@@ -1,4 +1,5 @@
 import re
+import os
 
 from spec2scl import settings
 from spec2scl import transformer
@@ -27,6 +28,44 @@ class EclipseTransformer(transformer.Transformer):
     @matches(r'(Enhances:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
     def eclipse_ignore_new_tags(self, original_spec, pattern, text):
         return ''
+
+    @matches(r'.*', one_line=False, sections=['%header'])
+    def eclipse_patches_header(self, original_spec, pattern, text):
+        lines = text.splitlines()
+        linenum = 0
+        last_occurance = -1
+        for l in lines:
+            if l.startswith('Source') or l.startswith('Patch'):
+                last_occurance = linenum
+            linenum = linenum + 1
+
+        if os.path.isdir(self.options['patches']):
+            newText = "\n# SCL-specific patches"
+            files = os.listdir(self.options['patches'])
+            for x in range(len(files)):
+                newText = newText + "\nPatch{0}: {1}".format(100 + x, files[x])
+
+            lines.insert(last_occurance + 1, newText)
+        return "\n".join(lines)
+ 
+    @matches(r'.*', one_line=False, sections=['%prep'])
+    def eclipse_patches_prep(self, original_spec, pattern, text):
+        lines = text.splitlines()
+        linenum = 0
+        last_occurance = -1
+        for l in lines:
+            if l.startswith('%setup') or l.startswith('%patch'):
+                last_occurance = linenum
+            linenum = linenum + 1
+
+        if os.path.isdir(self.options['patches']):
+            newText = "\n# SCL-specific patches"
+            files = os.listdir(self.options['patches'])
+            for x in range(len(files)):
+                newText = newText + "\n%patch{0} -p1".format(100 + x)
+
+            lines.insert(last_occurance + 1, newText)
+        return "\n".join(lines)
 
     @matches(r'(Conflicts:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)
     @matches(r'(Obsoletes:\s*)(?!\w*/\w*)([^\s]+)', sections=settings.METAINFO_SECTIONS)

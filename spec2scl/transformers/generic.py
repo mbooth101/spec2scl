@@ -48,6 +48,8 @@ class GenericTransformer(transformer.Transformer):
                     'mvn(org.eclipse.aether:aether-impl)':'mvn(org.eclipse.aether:aether-impl:1.1.0)',
                     'mvn(org.eclipse.aether:aether-spi)':'mvn(org.eclipse.aether:aether-spi:1.1.0)',
                     'mvn(org.eclipse.aether:aether-util)':'mvn(org.eclipse.aether:aether-util:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-transport-file)':'mvn(org.eclipse.aether:aether-transport-file:1.1.0)',
+                    'mvn(org.eclipse.aether:aether-transport-http)':'mvn(org.eclipse.aether:aether-transport-http:1.1.0)',
                     'mvn(org.eclipse.aether:aether-transport-wagon)':'mvn(org.eclipse.aether:aether-transport-wagon:1.1.0)',
                     'maven-resolver-api':'mvn(org.eclipse.aether:aether-api:1.1.0)',
                     'maven-resolver-connector-basic':'mvn(org.eclipse.aether:aether-connector-basic:1.1.0)',
@@ -57,6 +59,15 @@ class GenericTransformer(transformer.Transformer):
                     'maven-resolver-transport-file':'mvn(org.eclipse.aether:aether-transport-file:1.1.0)',
                     'maven-resolver-transport-http':'mvn(org.eclipse.aether:aether-transport-http:1.1.0)',
                     'maven-resolver-transport-wagon':'mvn(org.eclipse.aether:aether-transport-wagon:1.1.0)',
+                    'python3':'python',
+                    'mvn(org.ow2.asm:asm)':'mvn(org.ow2.asm:asm:7.0)',
+                    'mvn(org.ow2.asm:asm-all)':'mvn(org.ow2.asm:asm-all:7.0)',
+                    'mvn(org.ow2.asm:asm-analysis)':'mvn(org.ow2.asm:asm-analysis:7.0)',
+                    'mvn(org.ow2.asm:asm-commons)':'mvn(org.ow2.asm:asm-commons:7.0)',
+                    'mvn(org.ow2.asm:asm-debug-all)':'mvn(org.ow2.asm:asm-debug-all:7.0)',
+                    'mvn(org.ow2.asm:asm-tree)':'mvn(org.ow2.asm:asm-tree:7.0)',
+                    'mvn(org.ow2.asm:asm-util)':'mvn(org.ow2.asm:asm-util:7.0)',
+                    'mvn(org.apache.ant:ant)':'mvn(org.apache.ant:ant:1.10.5)',
                     }
             if groupdict['dep'] in transformations:
                 groupdict['dep'] = transformations[groupdict['dep']]

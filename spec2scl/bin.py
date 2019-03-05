@@ -51,6 +51,12 @@ def get_parser():
         default="",
         help='Comma separated list of transformer functions to skip.',
     )
+    parser.add_argument(
+        '-p', '--patches',
+        required=False,
+        default="",
+        help='Directory containing SCL-specific patches.',
+    )
 
     grp = parser.add_mutually_exclusive_group(required=False)
     grp.add_argument(
