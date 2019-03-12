@@ -20,6 +20,10 @@ class EclipseTransformer(transformer.Transformer):
     def eclipse_insert_baserelease(self, original_spec, pattern, text):
         return text.replace('%{?dist}', '.%{baserelease}%{?dist}', 1)
 
+    @matches(r'^(%global xmvn_libdir\s*)%\((.*)\)', one_line=True, sections=['%header'])
+    def xmvn_libdir(self, original_spec, pattern, text):
+        return pattern.sub(r"\1%(scl enable %{scl_maven} '\2')", text)
+
     @matches(r'brp-python-bytecompile', one_line=True, sections=['%header'])
     def python_byte_compiling(self, original_spec, pattern, text):
         return text.replace('brp-python-bytecompile', 'brp-scl-python-bytecompile', 1)
@@ -42,6 +46,7 @@ class EclipseTransformer(transformer.Transformer):
         if os.path.isdir(self.options['patches']):
             newText = "\n# SCL-specific patches"
             files = os.listdir(self.options['patches'])
+            files.sort()
             for x in range(len(files)):
                 newText = newText + "\nPatch{0}: {1}".format(100 + x, files[x])
 
@@ -61,6 +66,7 @@ class EclipseTransformer(transformer.Transformer):
         if os.path.isdir(self.options['patches']):
             newText = "\n# SCL-specific patches"
             files = os.listdir(self.options['patches'])
+            files.sort()
             for x in range(len(files)):
                 newText = newText + "\n%patch{0} -p1".format(100 + x)
 
