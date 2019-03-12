@@ -35,14 +35,9 @@ class GenericTransformer(transformer.Transformer):
 
             # Handle any transformations first
             transformations = {
-                    'mvn(com.google.guava:guava:15.0)':'mvn(com.google.guava:guava)',
-                    'mvn(com.google.guava:guava:16.0)':'mvn(com.google.guava:guava)',
-                    'mvn(com.google.guava:guava:17.0)':'mvn(com.google.guava:guava)',
-                    'mvn(com.google.guava:guava:18.0)':'mvn(com.google.guava:guava)',
-                    'mvn(com.google.guava:guava:19.0)':'mvn(com.google.guava:guava)',
-                    'mvn(com.google.guava:guava:20.0)':'mvn(com.google.guava:guava)',
-                    'mvn(com.google.guava:guava:21.0)':'mvn(com.google.guava:guava)',
-                    'guava20':'guava',
+                    'guava':'guava20',
+                    'mvn(com.google.guava:guava)':'mvn(com.google.guava:guava:20.0)',
+                    'mvn(com.google.guava:guava-testlib)':'mvn(com.google.guava:guava-testlib:20.0)',
                     'mvn(org.eclipse.aether:aether-api)':'mvn(org.eclipse.aether:aether-api:1.1.0)',
                     'mvn(org.eclipse.aether:aether-connector-basic)':'mvn(org.eclipse.aether:aether-connector-basic:1.1.0)',
                     'mvn(org.eclipse.aether:aether-impl)':'mvn(org.eclipse.aether:aether-impl:1.1.0)',
