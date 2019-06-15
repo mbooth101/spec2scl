@@ -33,15 +33,34 @@ class EclipseTransformer(transformer.Transformer):
     def eclipse_ignore_new_tags(self, original_spec, pattern, text):
         return ''
 
-    @matches(r'.*', one_line=False, sections=['%header'])
-    def eclipse_patches_header(self, original_spec, pattern, text):
-        lines = text.splitlines()
+    def eclipse_get_last_source_patch_line(self, lines):
         linenum = 0
         last_occurance = -1
         for l in lines:
             if l.startswith('Source') or l.startswith('Patch'):
                 last_occurance = linenum
             linenum = linenum + 1
+        return last_occurance
+
+    @matches(r'.*', one_line=False, sections=['%header'])
+    def eclipse_source_header(self, original_spec, pattern, text):
+        lines = text.splitlines()
+        last_occurance = self.eclipse_get_last_source_patch_line(lines)
+
+        if os.path.isdir(self.options['sources']):
+            newText = "\n# SCL-specific sources"
+            files = os.listdir(self.options['sources'])
+            files.sort()
+            for x in range(len(files)):
+                newText = newText + "\nSource{0}: {1}".format(100 + x, files[x])
+
+            lines.insert(last_occurance + 1, newText)
+        return "\n".join(lines)
+ 
+    @matches(r'.*', one_line=False, sections=['%header'])
+    def eclipse_patches_header(self, original_spec, pattern, text):
+        lines = text.splitlines()
+        last_occurance = self.eclipse_get_last_source_patch_line(lines)
 
         if os.path.isdir(self.options['patches']):
             newText = "\n# SCL-specific patches"

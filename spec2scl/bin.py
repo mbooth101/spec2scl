@@ -57,6 +57,12 @@ def get_parser():
         default="",
         help='Directory containing SCL-specific patches.',
     )
+    parser.add_argument(
+        '-s', '--sources',
+        required=False,
+        default="",
+        help='Directory containing SCL-specific sources.',
+    )
 
     grp = parser.add_mutually_exclusive_group(required=False)
     grp.add_argument(
